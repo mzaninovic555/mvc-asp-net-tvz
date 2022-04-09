@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var ime = ViewBag.ime;
+    var prezime = ViewBag.prezime;
+    var email = ViewBag.email;
+    var poruka = ViewBag.poruka;
+    var tipPoruke = ViewBag.tipPoruke;
+    var newsletter = ViewBag.newsletter;
+}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+    <li class="breadcrumb-item"><a href="/Home/Contact">Contact</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Contact Success</li>
+  </ol>
+</nav>
+
+<div class="row alert-success p-3" role="alert">
+    <p class="col"> Poštovani @ime @prezime (@email), zaprimili smo vašu poruku te će vam se netko ubrzo javiti. 
+        Sadržaj vaše poruke je: [@tipPoruke] - @poruka. 
+        Također, @newsletter o daljnjim promjenama preko newslettera.
+    </p>
+</div>

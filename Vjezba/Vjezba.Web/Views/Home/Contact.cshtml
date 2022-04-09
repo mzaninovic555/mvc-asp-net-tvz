@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/Home">Home</a></li>
+    <li class="breadcrumb-item"><a href="/Home/Contact">Contact</a></li>
+  </ol>
+</nav>
+
+<div class="modal fade" id="contactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kontaktirajte nas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="/Home/SubmitQuery" class="col">
+                <div class="modal-body">
+                    <div class="row mb-3 modal-body">
+                        <div class="col">
+                            <label for="ime" class="form-label">Ime</label>
+                            <input type="text" class="form-control" id="ime" name="ime" placeholder="Unesite ime">
+                        </div>
+                        <div class="col">
+                            <label for="prezime" class="form-label">Prezime</label>
+                            <input type="text" class="form-control" id="prezime" name="prezime"
+                                placeholder="Unesite prezime">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Unesite e-mail">
+                    </div>
+                    <div class="mb-3">
+                        <label for="poruka">Poruka</label>
+                        <textarea class="form-control" id="poruka" name="poruka" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tipPoruke">Tip poruke</label>
+                        <select class="form-control" id="tipPoruke" name="tipPoruke">
+                            <option>Pohvala</option>
+                            <option>Upit</option>
+                            <option>Poslovni prijedlog</option>
+                            <option>Žalba</option>
+                        </select>
+                    </div>
+                    <div class="mb-1">
+                        <input type="checkbox" class="form-check-input" id="newsletter" name="newsLetter">
+                        <label class="form-check-label" for="newsletter">Želim primati newsletter</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                    <button type="submit" class="btn btn-primary">Pošalji upit!</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Podaci koji su proslijeđeni iz controller-a: @ViewData["Message"]</p>
+
+<button type="button" id="modal-toggle-button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+    data-bs-target="#contactModal">
+    Kontaktirajte nas
+</button>
+
+<div class="row mb-3">
+    <div class="card border-dark mb-3 col-md-6" style="min-height: 200px;">
+        <div class="card-header">Adresa sjedišta</div>
+        <div class="card-body text-dark">
+            <p class="card-text">One Microsoft Way</p>
+            <p class="card-text">Redmond, WA 98052-6399</p>
+            <p class="card-text">P: 425.555.0100</p>
+        </div>
+    </div>
+    <div class="card border-dark col-md-6" style="max-height: 200px;">
+        <div class="card-header">Header</div>
+        <div class="card-body text-dark">
+            <b>Support:</b><a href="Support@example.com">Support@example.com</a>
+            <b>Marketing:</b><a href="Support@example.com">Marketing@example.com</a>
+        </div>
+    </div>
+</div>

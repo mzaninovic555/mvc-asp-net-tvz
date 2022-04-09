@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var ListaFAQ = ViewBag.ListaFAQ as Dictionary<string, string>;
+    var Selected = ViewBag.Selected;
+    var anySelected = Selected != null;
+}
+
+<dl class="row" style="width: 60%">
+    @for(int i = 0; i < ListaFAQ.Count; i++)
+    {
+        @if (anySelected && i == Selected - 1)
+        {
+            <dt class="col-md-6" style="font-weight: 900; color: #050478;"> @ListaFAQ.ElementAt(i).Key </dt>
+            <dd class="col-md-6" style="font-weight: 900; color: #050478;"> @ListaFAQ.ElementAt(i).Value </dd>
+        }
+        else
+        {
+            <dt class="col-md-6"> @ListaFAQ.ElementAt(i).Key </dt>
+            <dd class="col-md-6"> @ListaFAQ.ElementAt(i).Value </dd>
+        }
+    }
+</dl>
