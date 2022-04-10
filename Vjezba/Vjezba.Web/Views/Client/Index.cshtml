@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Vjezba.Web.Mock.Client>
+@{
+
+}
+<div class="row col-md-12">
+    <h3 class="mb-3">Lista klijenata</h3>
+    <div class="alert alert-primary mb-5" role="alert">
+        <h5>U sustavu postoji @Model.Count() klijenata</h5>
+    </div>
+    <ul class="nav nav-tabs mb-2" id="myTab">
+        <li class="nav-item">
+            <a href="#form-get" class="nav-link active" data-bs-toggle="tab">Zadatak 5.5</a>
+        </li>
+        <li class="nav-item">
+            <a href="#form-post" class="nav-link" data-bs-toggle="tab">Zadatak 5.6</a>
+        </li>
+        <li class="nav-item">
+            <a href="#form-post-multi" class="nav-link" data-bs-toggle="tab">Zadatak 5.7</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="form-get">
+            <form class="row" method="get" action="/Client/Index">
+                <div class="col-md-2">
+                    <input class="form-control" type="search" placeholder="Traži..." id="query" name="query">
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="submit">Pretraži</button>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="form-post">
+            <form class="row" method="post" action="/Client/Index">
+                <div class="col-md-4">
+                    <input class="form-control" type="search" placeholder="Traži po imenu..." id="nameQuery" name="nameQuery">
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control" type="search" placeholder="Traži po adresi..." id="queryAddress" name="queryAddress">
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="submit">Pretraži</button>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="form-post-multi">
+            <form class="row" method="post" action="/Client/AdvancedSearch">
+                <div class="col">
+                    <input class="form-control" type="search" placeholder="Traži po imenu..." id="Ime" name="Ime">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="search" placeholder="Traži po adresi..." id="email" name="email">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="search" placeholder="Traži po e-mail-u..." id="adresa" name="adresa">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="search" placeholder="Traži po gradu..." id="grad" name="grad">
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary" type="submit">Pretraži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table table-hover mt-4">
+        <thead>
+            <th scope="col">Client</th>
+            <th scope="col">Address</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">City</th>
+        </thead>
+        <tbody>
+            @foreach (var client in Model)
+            {
+                <tr>
+                    <th><a asp-controller="Client" asp-action="Details" asp-route-id=@client.ID> @client.FirstName
+                            @client.LastName </a></th>
+                    <td>@client.Address</td>
+                    <td>@client.Email</td>
+                    <td>@client.City?.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

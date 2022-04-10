@@ -4,12 +4,15 @@
 @{
 }
 
-<nav aria-label="breadcrumb">
+
+<nav aria-label="breadcrumb mb-2">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/Home">Home</a></li>
-    <li class="breadcrumb-item"><a href="/Home/Contact">Contact</a></li>
+    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+    <li class="breadcrumb-item" aria-current="page">Contact</li>
   </ol>
 </nav>
+
+<h2 class="mb-3">Contact</h2>
 
 <div class="modal fade" id="contactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -67,7 +70,7 @@
 
 <p>Podaci koji su proslijeđeni iz controller-a: @ViewData["Message"]</p>
 
-<button type="button" id="modal-toggle-button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+<button type="button" id="modal-toggle-button" class="btn btn-primary mb-5" data-bs-toggle="modal"
     data-bs-target="#contactModal">
     Kontaktirajte nas
 </button>
@@ -84,7 +87,7 @@
     <div class="card border-dark col-md-6" style="max-height: 200px;">
         <div class="card-header">Header</div>
         <div class="card-body text-dark">
-            <b>Support:</b><a href="Support@example.com">Support@example.com</a>
+            <b>Support:</b><a href="Support@example.com">Support@example.com</a> <br/><br/>
             <b>Marketing:</b><a href="Support@example.com">Marketing@example.com</a>
         </div>
     </div>

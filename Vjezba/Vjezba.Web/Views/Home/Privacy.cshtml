@@ -1,9 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
+<h2>@ViewData["Title"]</h2>
 
 <p>Use this page to detail your site's privacy policy.</p>
 
-<a asp-controller="Home" asp-action="FAQ">FAQ -> selected=none</a> <br/>
-<a asp-controller="Home" asp-action="FAQ" asp-route-selected=4>FAQ -> selected=4</a>
+<a class="link-primary" asp-controller="Home" asp-action="FAQ">FAQ -> selected=none</a> <br/><br/>
+<a class="link-danger" asp-controller="Home" asp-action="FAQ" asp-route-selected=4>FAQ -> selected=4</a><br/><br/>
