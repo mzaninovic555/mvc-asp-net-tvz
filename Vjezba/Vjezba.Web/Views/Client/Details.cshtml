@@ -27,7 +27,7 @@
     <dt class="col-md-6"> Telefon </dt>
     <dd class="col-md-6"> @Model.PhoneNumber </dd>
     <dt class="col-md-6"> Grad </dt>
-    <dd class="col-md-6 mb-5"> @Model.City.Name </dd>
+    <dd class="col-md-6 mb-5"> @Model.City?.Name </dd>
     </div>
     <a asp-controller="Client" asp-action="Index">Back to List</a>
 </div>
