@@ -76,8 +76,8 @@
             @foreach (var client in Model)
             {
                 <tr>
-                    <th><a asp-controller="Client" asp-action="Details" asp-route-id=@client.ID> @client.FirstName
-                            @client.LastName </a></th>
+                    <td><a asp-controller="Client" asp-action="Details" asp-route-id=@client.ID> @client.FirstName
+                            @client.LastName </a></td>
                     <td>@client.Address</td>
                     <td>@client.Email</td>
                     <td>@client.City?.Name</td>

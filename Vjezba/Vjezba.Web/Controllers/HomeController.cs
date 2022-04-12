@@ -44,9 +44,6 @@ namespace Vjezba.Web.Controllers
         public IActionResult SubmitQuery(IFormCollection formData)
         {
             //Ovdje je potrebno obraditi podatke i pospremiti finalni string u ViewBag
-
-            string haha = formData["newsletter"];
-
             ViewBag.ime = formData["ime"];
             ViewBag.prezime = formData["prezime"];
             ViewBag.email = formData["email"];
