@@ -72,7 +72,7 @@ namespace Vjezba.Web.Controllers
             Faq.Add("Što mislite o Spring-u?", "Apsolutno ne overloadani framework.");
             Faq.Add("Koliko importova treba jedna java klasa?", "Minimalno 20.");
             Faq.Add("Volite li pointere (zvjezdice)?", "Cesar kaže da su dobri.");
-            Faq.Add("Sviđa li vam se programirati u C-u?", "The law requires me to say yes.");
+            Faq.Add("Volite li raditi front-end?", "There is no greater pain.");
             ViewBag.ListaFAQ = Faq;
             ViewBag.Selected = selected;
 
