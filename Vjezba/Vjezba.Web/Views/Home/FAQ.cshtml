@@ -1,24 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    var ListaFAQ = ViewBag.ListaFAQ as Dictionary<string, string>;
-    var Selected = ViewBag.Selected;
-    var anySelected = Selected != null;
+﻿@{
+	ViewData["Title"] = "FAQ";
+	var selectedNumber = (int?)ViewData["selected"];
 }
+<h2>@ViewData["Title"]</h2>
 
-<dl class="row" style="width: 60%">
-    @for(int i = 0; i < ListaFAQ.Count; i++)
-    {
-        @if (anySelected && i == Selected - 1)
-        {
-            <dt class="col-md-6" style="font-weight: 900; color: #050478;"> @ListaFAQ.ElementAt(i).Key </dt>
-            <dd class="col-md-6" style="font-weight: 900; color: #050478;"> @ListaFAQ.ElementAt(i).Value </dd>
-        }
-        else
-        {
-            <dt class="col-md-6"> @ListaFAQ.ElementAt(i).Key </dt>
-            <dd class="col-md-6"> @ListaFAQ.ElementAt(i).Value </dd>
-        }
-    }
-</dl>
+<ul>
+	<li>
+		<div class="@(selectedNumber == 1 ? "bold" : "")">
+			Q: Ako je URL oblika /Test/Cvijet, koji je to Controller i koja akcija?
+		</div>
+		<div>
+			A: TestController, akcija "Cvijet".
+		</div>
+	</li>
+
+	<li>
+		<div class="@(selectedNumber == 2 ? "bold" : "")">
+			Q: Ako je URL oblika /Test/Cvijet?lang=en, kako izgleda parametar akcije ako je parametar opcionalni?
+		</div>
+		<div>
+			A: Cvijet(string lang = null)
+		</div>
+	</li>
+
+	<li>
+		<div class="@(selectedNumber == 3 ? "bold" : "")">
+			Q: Ako je URL oblika /Test/Cvijet?lang=en&f=9, kako izgleda akcija?
+		</div>
+		<div>
+			A: Cvijet(string lang = null, int? f = null)
+		</div>
+	</li>
+</ul>
+
+<style type="text/css">
+	.bold {
+		font-weight: bold;
+	}
+</style>

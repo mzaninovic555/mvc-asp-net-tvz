@@ -1,94 +1,101 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Contact page";
 }
 
-
-<nav aria-label="breadcrumb mb-2">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-    <li class="breadcrumb-item" aria-current="page">Contact</li>
-  </ol>
-</nav>
-
-<h2 class="mb-3">Contact</h2>
-
-<div class="modal fade" id="contactModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Kontaktirajte nas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form method="post" action="/Home/SubmitQuery" class="col">
-                <div class="modal-body">
-                    <div class="row mb-3 modal-body">
-                        <div class="col">
-                            <label for="ime" class="form-label">Ime</label>
-                            <input type="text" class="form-control" id="ime" name="ime" placeholder="Unesite ime">
-                        </div>
-                        <div class="col">
-                            <label for="prezime" class="form-label">Prezime</label>
-                            <input type="text" class="form-control" id="prezime" name="prezime"
-                                placeholder="Unesite prezime">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Unesite e-mail">
-                    </div>
-                    <div class="mb-3">
-                        <label for="poruka">Poruka</label>
-                        <textarea class="form-control" id="poruka" name="poruka" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tipPoruke">Tip poruke</label>
-                        <select class="form-control" id="tipPoruke" name="tipPoruke">
-                            <option>Pohvala</option>
-                            <option>Upit</option>
-                            <option>Poslovni prijedlog</option>
-                            <option>Žalba</option>
-                        </select>
-                    </div>
-                    <div class="mb-1">
-                        <input type="checkbox" class="form-check-input" id="newsletter" name="newsLetter">
-                        <label class="form-check-label" for="newsletter">Želim primati newsletter</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
-                    <button type="submit" class="btn btn-primary">Pošalji upit!</button>
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="row">
+	<div class="col-md-8">
+		<h2>@ViewBag.Title.</h2>
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#contact-modal">
+			Kontaktirajte nas!
+		</button>
+	</div>
 </div>
 
-<h1>@ViewData["Title"]</h1>
-
-<p>Podaci koji su proslijeđeni iz controller-a: @ViewData["Message"]</p>
-
-<button type="button" id="modal-toggle-button" class="btn btn-primary mb-5" data-bs-toggle="modal"
-    data-bs-target="#contactModal">
-    Kontaktirajte nas
-</button>
-
-<div class="row mb-3">
-    <div class="card border-dark mb-3 col-md-5 me-5" style="min-height: 200px;">
-        <div class="card-header">Adresa sjedišta</div>
-        <div class="card-body text-dark">
-            <p class="card-text">One Microsoft Way</p>
-            <p class="card-text">Redmond, WA 98052-6399</p>
-            <p class="card-text">P: 425.555.0100</p>
-        </div>
-    </div>
-    <div class="card border-dark col-md-5 ms-5" style="max-height: 200px;">
-        <div class="card-header">Header</div>
-        <div class="card-body text-dark">
-            <b>Support:</b><a href="Support@example.com">Support@example.com</a> <br/><br/>
-            <b>Marketing:</b><a href="Support@example.com">Marketing@example.com</a>
-        </div>
-    </div>
+<form action="/Home/SubmitQuery" method="post">
+	<!-- Modal -->
+	<div class="modal fade" id="contact-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Kontakt forma</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="ime">Ime</label>
+								<input type="text" class="form-control" placeholder="Unesite ime" name="ime">
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="prezime">Prezime</label>
+								<input type="text" class="form-control" placeholder="Unesite prezime" name="prezime">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email" class="control-label">Email</label>
+						<input type="email" class="form-control" placeholder="Unesite email" name="email">
+					</div>
+					<div class="form-group">
+						<label for="poruka" class="control-label">Poruka</label>
+						<textarea class="form-control" rows="5" name="poruka"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="tip" class="control-label">Tip upita</label>
+						<select name="tip" class="form-control">
+							<option value="Pohvala">Pohvala</option>
+							<option value="Upit">Upit</option>
+							<option value="Poslovni prijedlog">Poslovni prijedlog</option>
+							<option value="Žalba">Žalba</option>
+						</select>
+					</div>
+					<div class="row">
+						<div class="col-sm-8">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" name="newsletter" value="true" />
+									Želim primati newsletter
+								</label>
+								<input type="hidden" name="newsletter" value="false" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Pošalji upit!</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<div class="row" style="margin-top: 20px;">
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Adresa sjedišta</div>
+			<div class="panel-body">
+				<address>
+					One Microsoft Way<br />
+					Redmond, WA 98052-6399<br />
+					<abbr title="Phone">P:</abbr>
+					425.555.0100
+				</address>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">Javite nam se!</div>
+			<div class="panel-body">
+				<address>
+					<strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+					<strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+				</address>
+			</div>
+		</div>
+	</div>
 </div>

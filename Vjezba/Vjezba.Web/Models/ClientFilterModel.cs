@@ -2,9 +2,9 @@
 {
     public class ClientFilterModel
     {
-        public String Ime { get; set; }
-        public String Email { get; set; }
-        public String Adresa { get; set; }
-        public String Grad { get; set; }
+        public string FullName { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public string City { get; set; }
     }
 }

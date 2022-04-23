@@ -27,6 +27,19 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "contact_ruta",
+    pattern: "/kontakt-forma",
+    new { controller = "Home", action = "Contact" });
+
+app.MapControllerRoute(
+    name: "privacy_ruta",
+    pattern: "o-aplikaciji/{lang}",
+    new { controller="Home", action="Privacy" },
+    constraints: new { lang = @"[a-zA-Z]{2}"}
+    );
+
+
 MockClientRepository.Instance.Initialize(Path.Combine(app.Environment.WebRootPath, "data"));
 MockCityRepository.Instance.Initialize(Path.Combine(app.Environment.WebRootPath, "data"));
 

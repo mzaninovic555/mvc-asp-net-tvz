@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Vjezba.Web.Mock;
 using Vjezba.Web.Models;
 
@@ -6,68 +10,66 @@ namespace Vjezba.Web.Controllers
 {
     public class ClientController : Controller
     {
-        public IActionResult Index(string query)
+        public IActionResult Index(string query = null)
         {
-            List<Client> mockClients = 
-                query != null ? 
-                    MockClientRepository.Instance.All()
-                        .Where(c => c.FirstName.ToLower().Contains(query.ToLower()) || c.LastName.ToLower().Contains(query.ToLower()))
-                        .ToList() :
-                    MockClientRepository.Instance.All().ToList();
+            var clientQuery = MockClientRepository.Instance.All();
 
-            return View(model: mockClients);
+            if (!string.IsNullOrWhiteSpace(query))
+                clientQuery = clientQuery.Where(p => p.FullName.ToLower().Contains(query));
+
+            ViewBag.ActiveTab = 1;
+
+            return View(clientQuery.ToList());
         }
 
         [HttpPost]
-        public IActionResult Index(string nameQuery, string queryAddress)
+        public ActionResult Index(string queryName, string queryAddress)
         {
-            List<Client> mockClients = 
-                MockClientRepository.Instance.All()
-                .Where(c => nameQuery != null ? 
-                    (c.FirstName.ToLower().Contains(nameQuery.ToLower()) || c.LastName.ToLower().Contains(nameQuery.ToLower())) : 
-                    true)
-                .Where(c => queryAddress != null ? 
-                    c.Address.ToLower().Contains(queryAddress.ToLower()) : 
-                    true)
-                .ToList();
+            var clientQuery = MockClientRepository.Instance.All();
 
-            return View(model: mockClients);
+            //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
+            //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
+            if (!string.IsNullOrWhiteSpace(queryName))
+                clientQuery = clientQuery.Where(p => p.FullName.ToLower().Contains(queryName));
+
+            if (!string.IsNullOrWhiteSpace(queryAddress))
+                clientQuery = clientQuery.Where(p => p.Address.ToLower().Contains(queryAddress));
+
+            ViewBag.ActiveTab = 2;
+
+            var model = clientQuery.ToList();
+            return View(model);
         }
 
-        public IActionResult AdvancedSearch(ClientFilterModel model)
+        [HttpPost]
+        public ActionResult AdvancedSearch(ClientFilterModel filter)
         {
-            List<Client> mockClients = 
-                MockClientRepository.Instance.All()
-                .Where(c => model.Ime != null ?
-                    (c.FirstName.ToLower().Contains(model.Ime.ToLower()) || c.LastName.ToLower().Contains(model.Ime.ToLower())) :
-                    true)
-                .Where(c => model.Email != null ?
-                    (c.Email.ToLower().Contains(model.Email.ToLower())) :
-                    true)
-                .Where(c => model.Adresa != null ?
-                    (c.Address.ToLower().Contains(model.Adresa.ToLower())) :
-                    true)
-                .Where(c => model.Grad != null ?
-                    (c.City != null ? c.City.Name.ToLower().Contains(model.Grad.ToLower()) : false) :
-                    true)
-                .ToList();
+            var clientQuery = MockClientRepository.Instance.All();
 
+            //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
+            //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
+            if (!string.IsNullOrWhiteSpace(filter.FullName))
+                clientQuery = clientQuery.Where(p => p.FullName.ToLower().Contains(filter.FullName.ToLower()));
 
-            return View("Index", model: mockClients);
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+                clientQuery = clientQuery.Where(p => p.Address.ToLower().Contains(filter.Address.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(filter.Email))
+                clientQuery = clientQuery.Where(p => p.Email.ToLower().Contains(filter.Email.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(filter.City))
+                clientQuery = clientQuery.Where(p => p.City != null && p.City.Name.ToLower().Contains(filter.City.ToLower()));
+
+            ViewBag.ActiveTab = 3;
+
+            var model = clientQuery.ToList();
+            return View("Index", model);
         }
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id = null)
         {
-            Client foundById = MockClientRepository.Instance.FindByID(id.GetValueOrDefault());
-
-            if (foundById != null)
-            {
-                return View(model: foundById);
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            var model = id != null ? MockClientRepository.Instance.FindByID(id.Value) : null;
+            return View(model);
         }
     }
 }

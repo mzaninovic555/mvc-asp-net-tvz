@@ -1,33 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model Vjezba.Web.Mock.Client
+﻿@model Vjezba.Web.Mock.Client
+
 @{
+	ViewData["Title"] = "Details";
 }
 
-<div class="row">
+<h2>Details</h2>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controler="Client" asp-action="Index">Popis klijenata</a></li>
-            <li class="breadcrumb-item" aria-current="page">@Model.FirstName @Model.LastName</a></li>
-        </ol>
-    </nav>
-    <div class="row col-md-4 mt-2">
-        <dt class="col-md-6"> ID </dt>
-    <dd class="col-md-6"> @Model.ID </dd>
-    <dt class="col-md-6"> Ime i Prezime </dt>
-    <dd class="col-md-6"> @Model.FirstName @Model.LastName </dd>
-    <dt class="col-md-6"> E-mail </dt>
-    <dd class="col-md-6"> @Model.Email </dd>
-    <dt class="col-md-6"> Spol </dt>
-    <dd class="col-md-6"> @Model.Gender </dd>
-    <dt class="col-md-6"> Adresa </dt>
-    <dd class="col-md-6"> @Model.Address </dd>
-    <dt class="col-md-6"> Telefon </dt>
-    <dd class="col-md-6"> @Model.PhoneNumber </dd>
-    <dt class="col-md-6"> Grad </dt>
-    <dd class="col-md-6 mb-5"> @Model.City?.Name </dd>
-    </div>
-    <a asp-controller="Client" asp-action="Index">Back to List</a>
-</div>
+@if (Model != null)
+{
+	<ol class="breadcrumb">
+		<li><a asp-action="Index">Popis klijenata</a></li>
+		<li class="active">@Model.FullName</li>
+	</ol>
+
+	<div>
+		<h4>Client</h4>
+		<hr />
+		<dl class="dl-horizontal">
+			<dt>
+				ID
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.ID)
+			</dd>
+			<dt>
+				Ime i prezime
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.FullName)
+			</dd>
+			<dt>
+				Email
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.Email)
+			</dd>
+			<dt>
+				Spol
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.Gender)
+			</dd>
+			<dt>
+				Adresa
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.Address)
+			</dd>
+			<dt>
+				Tel.
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.PhoneNumber)
+			</dd>
+			<dt>
+				Grad
+			</dt>
+			<dd>
+				@Model?.City?.Name
+			</dd>
+		</dl>
+	</div>
+
+}
+else
+{
+	<div class="alert alert-danger">
+		Nije odabran ispravni ID klijenta.
+	</div>
+
+}
+
