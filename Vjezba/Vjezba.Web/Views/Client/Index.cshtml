@@ -1,4 +1,4 @@
-﻿@using Vjezba.Web.Mock
+﻿@using Vjezba.Model
 @model List<Client>
 
 @{
@@ -135,7 +135,7 @@
 		{
 			<tr>
 				<td>
-					<a asp-action="Details" asp-route-id="@item.ID">@item.FullName</a>
+					<a asp-action="Details" asp-route-id="@item.Id">@item.FullName</a>
 				</td>
 				<td>@item.Address</td>
 				<td>@item.Email</td>

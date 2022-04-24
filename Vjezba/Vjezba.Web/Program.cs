@@ -1,10 +1,15 @@
-using Vjezba.Web.Mock;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();
+
+builder.Services.AddDbContext<Vjezba.DAL.ClientManagerDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("ClientManagerDbContext"),
+        opt => opt.MigrationsAssembly("Vjezba.DAL")));
 
 var app = builder.Build();
 
@@ -40,7 +45,7 @@ app.MapControllerRoute(
     );
 
 
-MockClientRepository.Instance.Initialize(Path.Combine(app.Environment.WebRootPath, "data"));
-MockCityRepository.Instance.Initialize(Path.Combine(app.Environment.WebRootPath, "data"));
+//MockClientRepository.Instance.Initialize(Path.Combine(app.Environment.WebRootPath, "data"));
+//MockCityRepository.Instance.Initialize(Path.Combine(app.Environment.WebRootPath, "data"));
 
 app.Run();

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vjezba.Web", "Vjezba.Web\Vjezba.Web.csproj", "{9543656F-FADA-4C0C-8E99-64BEA88D40EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vjezba.Web", "Vjezba.Web\Vjezba.Web.csproj", "{9543656F-FADA-4C0C-8E99-64BEA88D40EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vjezba.DAL", "Vjezba.DAL\Vjezba.DAL.csproj", "{1773A9CD-D0A9-416A-97CF-DA05D9F49F9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vjezba.Model", "Vjezba.Model\Vjezba.Model.csproj", "{8EEB3926-EE5E-45B3-8866-369BFAC4015A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{9543656F-FADA-4C0C-8E99-64BEA88D40EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9543656F-FADA-4C0C-8E99-64BEA88D40EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9543656F-FADA-4C0C-8E99-64BEA88D40EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1773A9CD-D0A9-416A-97CF-DA05D9F49F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1773A9CD-D0A9-416A-97CF-DA05D9F49F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1773A9CD-D0A9-416A-97CF-DA05D9F49F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1773A9CD-D0A9-416A-97CF-DA05D9F49F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EEB3926-EE5E-45B3-8866-369BFAC4015A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EEB3926-EE5E-45B3-8866-369BFAC4015A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EEB3926-EE5E-45B3-8866-369BFAC4015A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EEB3926-EE5E-45B3-8866-369BFAC4015A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

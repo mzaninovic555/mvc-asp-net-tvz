@@ -12,4 +12,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Vjezba.DAL\Vjezba.DAL.csproj" />
+    <ProjectReference Include="..\Vjezba.Model\Vjezba.Model.csproj" />
+  </ItemGroup>
+
 </Project>
