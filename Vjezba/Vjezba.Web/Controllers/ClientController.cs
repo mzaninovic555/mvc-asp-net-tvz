@@ -71,5 +71,32 @@ namespace Vjezba.Web.Controllers
             var model = id != null ? MockClientRepository.Instance.FindByID(id.Value) : null;
             return View(model);
         }
+
+        public IActionResult Create()
+        {
+            ViewBag.Cities = MockCityRepository.Instance.All().ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(ClientInputBinder formClient)
+        {
+            Client newClient = new Client();
+
+            newClient.ID = MockClientRepository.Instance.All().OrderByDescending(p => p.ID).First().ID + 1;
+            newClient.FirstName = formClient.FirstName;
+            newClient.LastName = formClient.LastName;
+            newClient.Email = formClient.Email;
+            newClient.Gender = formClient.Gender;
+            newClient.Address = formClient.Address;
+            newClient.PhoneNumber = formClient.PhoneNumber;
+            newClient.CityID = formClient.CityID;
+            newClient.City = MockCityRepository.Instance.All().Where(c => c.ID == formClient.CityID).First();
+
+            MockClientRepository.Instance.InsertOrUpdate(newClient);
+            ViewBag.ActiveTab = 1;
+
+            return View("Index", MockClientRepository.Instance.All().ToList());
+        }
     }
 }

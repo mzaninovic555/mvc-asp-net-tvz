@@ -1,0 +1,42 @@
+﻿@model Vjezba.Web.Models.ClientFilterModel
+@*
+	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+		<!--
+a. Iskoristiti EditorFor i NameFor ekstenzije za kreiranje polja na formi
+	i. Pri radu s EditorFor ekstenzijom, predati i htmlAttributes kako je definirano
+ranije
+b. Iskoristiti <input asp-for..> tag helper i postaviti mu CSS klasu form-control --
+c. Iskoristiti TextBoxFor i predati klasu 'form-control', kako je definirano ranije --
+d. Podesiti da je tab sa novom formom otvoren pri učitavanju stranice
+			-->
+<form action="@Url.Action("AdvancedSearch")" method="post" class="form-inline">
+	<div class="row">
+		<div class="col">
+			<div class="form-group">
+				<!--<input type="text" class="form-control" name="FullName" placeholder="Pretraga po imenu">-->
+				@Html.TextBoxFor(c => c.FullName, new { placeholder = "Pretraga po imenu", @class = "form-control"})
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<input type="text" class="form-control" name="@Html.NameFor(c => c.Address)" placeholder="Pretraga po adresi">
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<!--<input type="text" class="form-control" name="Email" placeholder="Pretraga po e-mailu">-->
+				<input asp-for="Email" class="form-control" placeholder="Email"/>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<!--<input type="text" class="form-control" name="City" placeholder="Pretraga po gradu">-->
+				@Html.EditorFor(c => c.City, new { htmlAttributes= new { @class="form-control", placeholder="Pretraga po gradu" } })
+			</div> 
+		</div>
+		<div class="col">
+			<button type="submit" class="btn btn-primary m-t-10">Submit</button>
+		</div>
+	</div>
+</form>
