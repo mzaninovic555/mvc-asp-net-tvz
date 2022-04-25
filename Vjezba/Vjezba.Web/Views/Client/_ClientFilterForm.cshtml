@@ -14,7 +14,6 @@ d. Podesiti da je tab sa novom formom otvoren pri učitavanju stranice
 	<div class="row">
 		<div class="col">
 			<div class="form-group">
-				<!--<input type="text" class="form-control" name="FullName" placeholder="Pretraga po imenu">-->
 				@Html.TextBoxFor(c => c.FullName, new { placeholder = "Pretraga po imenu", @class = "form-control"})
 			</div>
 		</div>
@@ -25,13 +24,11 @@ d. Podesiti da je tab sa novom formom otvoren pri učitavanju stranice
 		</div>
 		<div class="col">
 			<div class="form-group">
-				<!--<input type="text" class="form-control" name="Email" placeholder="Pretraga po e-mailu">-->
-				<input asp-for="Email" class="form-control" placeholder="Email"/>
+				<input asp-for="Email" class="form-control" placeholder="Pretraga po email-u"/>
 			</div>
 		</div>
 		<div class="col">
 			<div class="form-group">
-				<!--<input type="text" class="form-control" name="City" placeholder="Pretraga po gradu">-->
 				@Html.EditorFor(c => c.City, new { htmlAttributes= new { @class="form-control", placeholder="Pretraga po gradu" } })
 			</div> 
 		</div>

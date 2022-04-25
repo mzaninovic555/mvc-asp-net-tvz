@@ -108,10 +108,10 @@
 		</div>
 		<div role="tabpanel" class="tab-pane @(ViewBag.ActiveTab == 4 ? "show active" : "")" id="z-3-3-1">
 			<h4>Zadatak 3.3.1 - Partial view</h4>
-			<!--@await Html.PartialAsync("_ClientFilter", new ClientFilterModel())-->
-			<partial name="_ClientFilter" model="new ClientFilterModel()" />
+			@await Html.PartialAsync("_ClientFilter", new ClientFilterModel())
+			<!--<partial name="_ClientFilter" model="new ClientFilterModel()" />-->
 		</div>
-		<div role="tabpanel" class="tab-pane show active @(ViewBag.ActiveTab == 5 ? "show active" : "")" id="z-3-3-2">
+		<div role="tabpanel" class="tab-pane @(ViewBag.ActiveTab == 5 ? "show active" : "")" id="z-3-3-2">
 			<h4>Zadatak 3.3.2 - EditorFor, NameFor, httmlAttributes</h4>
 			<partial name="_ClientFilterForm" model="new ClientFilterModel()" />
 		</div>

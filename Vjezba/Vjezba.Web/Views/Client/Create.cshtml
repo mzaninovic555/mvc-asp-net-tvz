@@ -35,7 +35,7 @@
 			<input asp-for="PhoneNumber" class="form-control" placeholder="Unesite broj telefona" required />
 		</div>
 		<div class="form-group mb-3">
-			<select  class="form-select">
+			<select  class="form-select" name="CityId" id="CityId">
 				@foreach (var City in Cities)
 				{
 					<option value="@City.Id">@City.Name</option>

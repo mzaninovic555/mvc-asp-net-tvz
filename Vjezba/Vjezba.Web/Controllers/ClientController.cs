@@ -68,7 +68,7 @@ namespace Vjezba.Web.Controllers
             if (!string.IsNullOrWhiteSpace(filter.City))
                 clientQuery = clientQuery.Where(p => p.City != null && p.City.Name.ToLower().Contains(filter.City.ToLower())).ToList();
 
-            ViewBag.ActiveTab = 3;
+            ViewBag.ActiveTab = 5;
 
             var model = clientQuery.ToList();
             return View("Index", model);
@@ -97,14 +97,17 @@ namespace Vjezba.Web.Controllers
             newClient.Gender = formClient.Gender;
             newClient.Address = formClient.Address;
             newClient.PhoneNumber = formClient.PhoneNumber;
-            newClient.CityId = formClient.CityId;
-            //ViewBag.ActiveTab = 1;
+            newClient.CityId = clientManagerDbContext
+                .Cities
+                .Where(c => c.Id == formClient.CityId)
+                .Select(c => c.Id)
+                .First();
 
             this.clientManagerDbContext.Clients.Add(newClient);
             this.clientManagerDbContext.SaveChanges();
 
-            return View("Index", this.clientManagerDbContext.Clients.ToList());
-
+            var model = this.clientManagerDbContext.Clients.Include(c => c.City).ToList();
+            return RedirectToAction("Index", model);
         }
     }
 }
