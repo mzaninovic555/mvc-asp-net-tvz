@@ -1,31 +1,9 @@
 ﻿@{
-	ViewData["Title"] = "Privacy Policy";
-	string lang = ViewBag.Lang;
-	string poruka;
-
-	switch (lang)
-	{
-		case "en":
-			poruka = "Jezik je engleski";
-			break;
-		case "hr":
-			poruka = "Jezik je hrvatski";
-			break;
-		case "de":
-			poruka = "Jezik je njemački";
-			break;
-		case "zh":
-			poruka = "Jezik je kineski";
-			break;
-		default:
-			poruka = "Nije odabran podržani jezik";
-			break;
-	}
+    ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
-<h2>@poruka</h2>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<p>@ViewBag.Message</p>
 
 <div class="row">
 	<div class="col-md-4">

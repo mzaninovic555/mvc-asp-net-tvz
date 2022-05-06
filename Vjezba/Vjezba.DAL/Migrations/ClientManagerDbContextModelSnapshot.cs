@@ -17,58 +17,59 @@ namespace Vjezba.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("Vjezba.Model.City", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Cities");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            ID = 1,
                             Name = "Zagreb"
                         },
                         new
                         {
-                            Id = 2,
-                            Name = "New York"
+                            ID = 2,
+                            Name = "Velika Gorica"
                         },
                         new
                         {
-                            Id = 3,
-                            Name = "London"
+                            ID = 3,
+                            Name = "Vrbovsko"
                         });
                 });
 
             modelBuilder.Entity("Vjezba.Model.Client", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CityId")
+                    b.Property<int?>("CityID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -91,24 +92,11 @@ namespace Vjezba.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("CityID");
 
                     b.ToTable("Clients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "AdresaUZagrebu 54",
-                            CityId = 1,
-                            Email = "ivan.cesar@mail.hr",
-                            FirstName = "Ivan",
-                            Gender = "M",
-                            LastName = "Cesar",
-                            PhoneNumber = "0916789941"
-                        });
                 });
 
             modelBuilder.Entity("Vjezba.Model.Meeting", b =>
@@ -119,32 +107,32 @@ namespace Vjezba.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ClientId")
+                    b.Property<int>("ClientID")
                         .HasColumnType("int");
 
                     b.Property<string>("Comments")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("End")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MeetingStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MeetingType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("endDate")
+                    b.Property<DateTime?>("Start")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("startDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ClientID");
 
                     b.ToTable("Meetings");
                 });
@@ -153,7 +141,7 @@ namespace Vjezba.DAL.Migrations
                 {
                     b.HasOne("Vjezba.Model.City", "City")
                         .WithMany("Clients")
-                        .HasForeignKey("CityId")
+                        .HasForeignKey("CityID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -164,7 +152,7 @@ namespace Vjezba.DAL.Migrations
                 {
                     b.HasOne("Vjezba.Model.Client", "Client")
                         .WithMany("Meetings")
-                        .HasForeignKey("ClientId")
+                        .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

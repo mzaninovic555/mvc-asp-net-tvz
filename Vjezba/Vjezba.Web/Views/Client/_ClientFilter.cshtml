@@ -1,31 +1,24 @@
-﻿@model Vjezba.Model.ClientFilterModel
-@*
-	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-<form action="@Url.Action("AdvancedSearch")" method="post" class="form-inline">
+﻿@using Vjezba.Web.Models
+
+@model ClientFilterModel
+
+<form action="@Url.Action("Index")" method="post">
 	<div class="row">
 		<div class="col">
-			<div class="form-group">
-				<input type="text" class="form-control" name="FullName" placeholder="Pretraga po imenu">
-			</div>
+			<input asp-for="FullName" class="form-control" type="text" placeholder="Ime i prezime" />
 		</div>
 		<div class="col">
-			<div class="form-group">
-				<input type="text" class="form-control" name="Address" placeholder="Pretraga po adresi">
-			</div>
+			<input asp-for="Address" class="form-control" type="text" placeholder="Adresa" />
 		</div>
 		<div class="col">
-			<div class="form-group">
-				<input type="text" class="form-control" name="Email" placeholder="Pretraga po e-mailu">
-			</div>
+			<input asp-for="Email" class="form-control" type="text" placeholder="Email" />
 		</div>
 		<div class="col">
-			<div class="form-group">
-				<input type="text" class="form-control" name="City" placeholder="Pretraga po gradu">
-			</div>
+			<input asp-for="City" class="form-control" type="text" placeholder="Grad" />
 		</div>
 		<div class="col">
-			<button type="submit" class="btn btn-primary m-t-10">Submit</button>
+			<button type="submit" class="btn btn-outline-info">Pretraga</button>
+			<a asp-action="Create" class="btn btn-success">Novi</a>
 		</div>
 	</div>
 </form>

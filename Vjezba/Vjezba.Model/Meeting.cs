@@ -1,36 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace Vjezba.Model
 {
-    public enum MeetingType
-    {
-        InPerson,
-        VideoCall
-    }
-    public enum MeetingStatus
-    {
-        Scheduled,
-        Cancelled
-    }
     public class Meeting
     {
-        [Key]
         public int Id { get; set; }
-        public MeetingType MeetingType { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
-        public MeetingStatus MeetingStatus { get; set; }
         public string Location { get; set; }
+        public MeetingType Type { get; set; }
+        public MeetingStatus Status { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
         public string Comments { get; set; }
 
-        [ForeignKey("Client")]
-        public int ClientId { get; set; }
-        public virtual Client Client { get; set; }
+        [ForeignKey(nameof(Client))]
+        public int ClientID { get; set; }
+        public Client Client { get; set; }
     }
+
+    public enum MeetingType { InPerson, VideoCall }
+    public enum MeetingStatus { Scheduled, Cancelled }
 }

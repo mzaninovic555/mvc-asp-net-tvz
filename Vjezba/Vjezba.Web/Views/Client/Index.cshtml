@@ -1,124 +1,13 @@
-﻿@using Vjezba.Model
-@model List<Client>
+﻿@model List<Client>
 
 @{
-
 	ViewData["Title"] = "Home Page";
 }
 
-<style>
-	.tab-pane {
-		padding: 20px;
-	}
-</style>
-
-<div style="margin-top: 20px;">
-	<!-- Nav tabs -->
-
-	<ul class="nav nav-tabs">
-		<li class="nav-item">
-			<a class="nav-link @(ViewBag.ActiveTab == 1 ? "active" : "")" href="#z-5-5" aria-controls="z-5-5" role="tab"
-				data-bs-toggle="tab">Zadatak 5.5</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link @(ViewBag.ActiveTab == 2 ? "active" : "")" href="#z-5-6" aria-controls="z-5-6" role="tab"
-				data-bs-toggle="tab">Zadatak 5.6</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link @(ViewBag.ActiveTab == 3 ? "active" : "")" href="#z-5-7" aria-controls="z-5-7" role="tab"
-				data-bs-toggle="tab">Zadatak 5.7</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link @(ViewBag.ActiveTab == 4 ? "active" : "")" href="#z-3-3-1" aria-controls="z-3-3-1" role="tab"
-				data-bs-toggle="tab">Zadatak 3.3.1</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link @(ViewBag.ActiveTab == 5 ? "active" : "")" href="#z-3-3-2" aria-controls="z-3-3-2" role="tab"
-				data-bs-toggle="tab">Zadatak 3.3.2</a>
-		</li>
-	</ul>
-
-	<!-- Tab panes -->
-	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane @(ViewBag.ActiveTab == 1 ? "show active" : "")" id="z-5-5">
-			<h4>Zadatak 5.5 - GET forma s jednim parametrom</h4>
-			<form action="@Url.Action("Index")" method="get">
-				<div class="row">
-					<div class="col-9">
-						<div class="form-group">
-							<input type="text" class="form-control" name="query" placeholder="Upišite željeni pojam">
-						</div>
-					</div>
-					<div class="col-3">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div role="tabpanel" class="tab-pane @(ViewBag.ActiveTab == 2 ? "show active" : "")" id="z-5-6">
-			<h4>Zadatak 5.6 - POST forma s dva parametra</h4>
-			<form action="@Url.Action("Index")" method="post">
-				<div class="row">
-					<div class="col-4">
-						<div class="form-group">
-							<input type="text" class="form-control" name="queryName" placeholder="Pretraga po imenu">
-						</div>
-					</div>
-					<div class="col-4">
-						<div class="form-group">
-							<input type="text" class="form-control" name="queryAddress"
-								placeholder="Pretraga po adresi">
-						</div>
-					</div>
-					<div class="col-2">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div role="tabpanel" class="tab-pane @(ViewBag.ActiveTab == 3 ? "show active" : "")" id="z-5-7">
-			<h4>Zadatak 5.7 - POST forma, binding na model</h4>
-			<form action="@Url.Action("AdvancedSearch")" method="post" class="form-inline">
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							<input type="text" class="form-control" name="FullName" placeholder="Pretraga po imenu">
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<input type="text" class="form-control" name="Address" placeholder="Pretraga po adresi">
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<input type="text" class="form-control" name="Email" placeholder="Pretraga po e-mailu">
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<input type="text" class="form-control" name="City" placeholder="Pretraga po gradu">
-						</div>
-					</div>
-					<div class="col">
-						<button type="submit" class="btn btn-primary m-t-10">Submit</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div role="tabpanel" class="tab-pane @(ViewBag.ActiveTab == 4 ? "show active" : "")" id="z-3-3-1">
-			<h4>Zadatak 3.3.1 - Partial view</h4>
-			@await Html.PartialAsync("_ClientFilter", new ClientFilterModel())
-			<!--<partial name="_ClientFilter" model="new ClientFilterModel()" />-->
-		</div>
-		<div role="tabpanel" class="tab-pane @(ViewBag.ActiveTab == 5 ? "show active" : "")" id="z-3-3-2">
-			<h4>Zadatak 3.3.2 - EditorFor, NameFor, httmlAttributes</h4>
-			<partial name="_ClientFilterForm" model="new ClientFilterModel()" />
-		</div>
-	</div>
+<h1>Popis klijenata</h1>
+<div style="margin-top: 20px; margin-bottom: 10px;">
+	<partial name="_ClientFilter" model="new ClientFilterModel()" />
 </div>
-
-<a asp-controller="Client" asp-action="Create">Unos klijenta</a>
 
 <table style="margin-top: 20px;" class="table table-condensed">
 	<thead>
@@ -131,17 +20,15 @@
 	</thead>
 	<tbody>
 		@foreach (var item in Model)
-
 		{
 			<tr>
 				<td>
-					<a asp-action="Details" asp-route-id="@item.Id">@item.FullName</a>
+					<a asp-action="Details" asp-route-id="@item.ID">@item.FullName</a>
 				</td>
 				<td>@item.Address</td>
 				<td>@item.Email</td>
 				<td>@item.City?.Name</td>
 			</tr>
-
 		}
 	</tbody>
 </table>

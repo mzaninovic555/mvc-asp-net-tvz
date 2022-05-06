@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Vjezba.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,10 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();
 
-builder.Services.AddDbContext<Vjezba.DAL.ClientManagerDbContext>(options =>
+builder.Services.AddDbContext<ClientManagerDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("ClientManagerDbContext"),
-        opt => opt.MigrationsAssembly("Vjezba.DAL")));
+            opt => opt.MigrationsAssembly("Vjezba.DAL")));
 
 var app = builder.Build();
 
@@ -29,23 +30,17 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "kontakt-forma",
+    pattern: "kontakt-forma",
+    defaults: new { controller = "Home", action = "Contact" });
+
+app.MapControllerRoute(
+    name: "o-aplikaciji",
+    pattern: "o-aplikaciji/{lang:alpha:length(2)}",
+    defaults: new { controller = "Home", action = "Privacy" });
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
-    name: "contact_ruta",
-    pattern: "/kontakt-forma",
-    new { controller = "Home", action = "Contact" });
-
-app.MapControllerRoute(
-    name: "privacy_ruta",
-    pattern: "o-aplikaciji/{lang}",
-    new { controller="Home", action="Privacy" },
-    constraints: new { lang = @"[a-zA-Z]{2}"}
-    );
-
-
-//MockClientRepository.Instance.Initialize(Path.Combine(app.Environment.WebRootPath, "data"));
-//MockCityRepository.Instance.Initialize(Path.Combine(app.Environment.WebRootPath, "data"));
 
 app.Run();

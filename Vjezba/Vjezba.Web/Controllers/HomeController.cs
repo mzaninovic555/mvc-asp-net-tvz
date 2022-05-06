@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Vjezba.Model;
+using Vjezba.Web.Models;
 
 namespace Vjezba.Web.Controllers
 {
@@ -20,12 +20,11 @@ namespace Vjezba.Web.Controllers
 
         public IActionResult Privacy(string lang)
         {
-            ViewBag.Lang = lang;
+            ViewData["Message"] = "Your application description page. Language = " + lang;
             return View();
         }
 
-        [Route("[controller]/[action]/{selected:minlength(1):maxlength(2):int?}")]
-        [Route("/cesto-postavljena-pitanja")]
+        [Route("cesto-postavljana-pitanja/{selected:int:min(1):max(99)?}")]
         public IActionResult FAQ(int? selected = null)
         {
             ViewData["selected"] = selected;

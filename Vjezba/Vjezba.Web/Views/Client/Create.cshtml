@@ -1,47 +1,46 @@
 ﻿@model Vjezba.Model.Client
-@*
-	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-	List<Vjezba.Model.City> Cities = ViewBag.Cities;
-}
-<ol class="breadcrumb">
-	<li><a asp-controller="Client" asp-action="Index">Popis klijenata</a></li>
-	<li class="active">Create</li>
-</ol>
 
-<div role="tabpanel" class="tab-pane col-4" id="z-3-3-1">
-	<h4>Zadatak 3.3.1 - Forma kreiranja</h4>
-	<form asp-controller="Client" asp-action="Create" method="post">
-		<div class="form-group  mb-3">
-			<input asp-for="FirstName" class="form-control" placeholder="Unesite ime" required />
-		</div>
-		<div class="form-group  mb-3">
-			<input asp-for="LastName" class="form-control" placeholder="Unesite prezime" required />
-		</div>
-		<div class="form-group  mb-3">
-			<input asp-for="Email" class="form-control" placeholder="Unesite e-mail" required />
-		</div>
-		<div class="form-group  mb-3">
-			<select class="form-select" name="Gender">
-				<option value="M">Muško</option>
-				<option value="F">Žensko</option>
-			</select>
-		</div>
-		<div class="form-group  mb-3">
-			<input asp-for="Address" class="form-control" placeholder="Unesite adresu" required />
-		</div>
-		<div class="form-group  mb-3">
-			<input asp-for="PhoneNumber" class="form-control" placeholder="Unesite broj telefona" required />
-		</div>
-		<div class="form-group mb-3">
-			<select  class="form-select" name="CityId" id="CityId">
-				@foreach (var City in Cities)
-				{
-					<option value="@City.Id">@City.Name</option>
-				}
-			</select>
-		</div>
-		<button type="submit" class="btn btn-primary m-t-10">Unesi</button>
-	</form>
+@{
+	ViewData["Title"] = "Dodavanje novog klijenta";
+}
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a asp-action="Index">Popis klijenata</a></li>
+		<li class="breadcrumb-item active" aria-current="page">Novi klijent</li>
+	</ol>
+</nav>
+
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div class="form-group">
+				<label class="control-label">Ime</label>
+				<input asp-for="FirstName" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label class="control-label">Prezime</label>
+				<input asp-for="LastName" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label asp-for="Email" class="control-label"></label>
+				<input asp-for="Email" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label class="control-label">Spol</label>
+				<input asp-for="Gender" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label class="control-label">Obitavalište</label>
+				<input asp-for="Address" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label class="control-label">Tel.</label>
+				<input asp-for="PhoneNumber" class="form-control" />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Spremi" class="btn btn-outline-success" />
+			</div>
+		</form>
+	</div>
 </div>
