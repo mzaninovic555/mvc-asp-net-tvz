@@ -23,7 +23,7 @@ namespace Vjezba.Web.Controllers
         {
             filter ??= new ClientFilterModel();
 
-            var clientQuery = this._dbContext.Clients.AsQueryable();
+            var clientQuery = this._dbContext.Clients.Include(c => c.City).AsQueryable();
 
             //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
             //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
@@ -66,6 +66,35 @@ namespace Vjezba.Web.Controllers
             this._dbContext.SaveChanges();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [ActionName("Edit")]
+        public IActionResult EditGet(int id)
+        {
+            Client client = this._dbContext.Clients.First(c => c.ID == id);
+
+            return View(client);
+        }
+
+        [HttpPost]
+        [ActionName("Edit")]
+        public async Task<IActionResult> EditPost(int id)
+        {
+            Client client = this._dbContext.Clients.Include(c => c.City).First(c => c.ID == id);
+            bool isOk = await TryUpdateModelAsync(client);
+
+            var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
+                .SelectMany(E => E.Errors)
+                .Select(E => E.ErrorMessage)
+                .ToList();
+
+            if (isOk)
+            {
+                this._dbContext.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
         }
     }
 }

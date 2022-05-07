@@ -1,21 +1,22 @@
 ﻿@using Vjezba.Model
 @model Client
-
 @{
-	ViewData["Title"] = "Dodavanje novog klijenta";
 }
 
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a asp-action="Index">Popis klijenata</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Novi klijent</li>
+		<li class="breadcrumb-item active" aria-current="page">Uredi klijenta</li>
 	</ol>
 </nav>
 
 <div class="row">
 	<div class="col-md-4">
-		<form asp-action="Create">
-			@await Html.PartialAsync("_CreateOrEdit", new Client())
+		<form asp-action="Edit">
+			@Html.HiddenFor(c => c.ID)
+			@Html.HiddenFor(c => c.City)
+			@Html.HiddenFor(c => c.Meetings)
+			@await Html.PartialAsync("_CreateOrEdit", Model)
 		</form>
 	</div>
 </div>

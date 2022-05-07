@@ -1,4 +1,4 @@
-﻿@model List<Client>
+﻿@model List<Vjezba.Model.Client>
 
 @{
 	ViewData["Title"] = "Home Page";
@@ -16,6 +16,7 @@
 			<th>Address</th>
 			<th>Email</th>
 			<th>City</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,6 +29,11 @@
 				<td>@item.Address</td>
 				<td>@item.Email</td>
 				<td>@item.City?.Name</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.ID">
+						<button class="btn btn-warning">Uredi</button>
+					</a>
+				</td>
 			</tr>
 		}
 	</tbody>
