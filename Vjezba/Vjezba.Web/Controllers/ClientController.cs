@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Vjezba.DAL;
 using Vjezba.Model;
 using Vjezba.Web.Models;
@@ -61,11 +57,17 @@ namespace Vjezba.Web.Controllers
         [HttpPost]
         public IActionResult Create(Client model)
         {
-            model.CityID = 1;
-            this._dbContext.Clients.Add(model);
-            this._dbContext.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                model.CityID = 1;
+                this._dbContext.Clients.Add(model);
+                this._dbContext.SaveChanges();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
         }
 
         [ActionName("Edit")]
