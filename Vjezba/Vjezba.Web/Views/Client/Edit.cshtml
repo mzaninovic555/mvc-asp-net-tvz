@@ -20,3 +20,25 @@
 		</form>
 	</div>
 </div>
+
+@section scripts {
+	<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+	<link rel="stylesheet"
+		href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">
+	<script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
+	<script>
+		var address = $("#address");
+		const geocoder = new MapboxGeocoder({
+			accessToken: 'pk.eyJ1IjoibXphbmlub3ZpYzU1NSIsImEiOiJjbDJ3MmkxNzMwaGQ2M2pxcGxiZm83NmU0In0.izS7XWeD2MAq4Y6M-l4bKA',
+			types: 'country,region,place,postcode,locality,neighborhood,address',
+		});
+
+		geocoder.addTo('#mapbox');
+
+		$(".mapboxgl-ctrl-geocoder--input").change(function () {
+			address.val($(this).val());
+			console.log(address.val());
+		})
+	</script>
+}

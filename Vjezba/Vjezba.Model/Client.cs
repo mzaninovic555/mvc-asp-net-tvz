@@ -25,11 +25,11 @@ namespace Vjezba.Model
 
         [ForeignKey(nameof(City))]
         public int? CityID { get; set; }
-        public City City { get; set; }
+        public City? City { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";
 
-        public virtual ICollection<Meeting> Meetings { get; set; }
+        public virtual ICollection<Meeting>? Meetings { get; set; }
 
     }
 }

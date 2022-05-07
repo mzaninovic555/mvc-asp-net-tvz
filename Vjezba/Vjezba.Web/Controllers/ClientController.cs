@@ -60,6 +60,12 @@ namespace Vjezba.Web.Controllers
         [HttpPost]
         public IActionResult Create(Client model)
         {
+            InitiateSelectCities();
+
+            var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
+                .SelectMany(E => E.Errors)
+                .Select(E => E.ErrorMessage)
+                .ToList();
 
             if (ModelState.IsValid)
             {
@@ -68,7 +74,6 @@ namespace Vjezba.Web.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            InitiateSelectCities();
             
             return View(model);
         }
