@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Vjezba.DAL;
 using Vjezba.Model;
@@ -51,6 +52,8 @@ namespace Vjezba.Web.Controllers
 
         public IActionResult Create()
         {
+            InitiateSelectCities();
+
             return View();
         }
 
@@ -60,13 +63,13 @@ namespace Vjezba.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                model.CityID = 1;
                 this._dbContext.Clients.Add(model);
                 this._dbContext.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
             }
-
+            InitiateSelectCities();
+            
             return View(model);
         }
 
@@ -74,6 +77,7 @@ namespace Vjezba.Web.Controllers
         public IActionResult EditGet(int id)
         {
             Client client = this._dbContext.Clients.First(c => c.ID == id);
+            InitiateSelectCities();
 
             return View(client);
         }
@@ -95,8 +99,29 @@ namespace Vjezba.Web.Controllers
                 this._dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+            InitiateSelectCities();
 
             return View();
+        }
+
+        public void InitiateSelectCities()
+        {
+            var cities = new List<SelectListItem>();
+
+            var listItem = new SelectListItem();
+            listItem.Text = " - odaberite -";
+            listItem.Value= " - odaberite -";
+            cities.Add(listItem);
+
+            foreach(var city in this._dbContext.Cities)
+            {
+                listItem = new SelectListItem();
+                listItem.Text = city.Name;
+                listItem.Value = city.ID.ToString();
+                cities.Add(listItem);
+            }
+
+            ViewBag.Cities = cities;
         }
     }
 }

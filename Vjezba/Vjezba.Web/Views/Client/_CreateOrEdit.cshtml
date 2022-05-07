@@ -31,10 +31,15 @@
     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
 </div>
 <div class="form-group">
+    <label class="control-label">Grad</label>
+    <select asp-for="CityID" asp-items="ViewBag.Cities" class="form-control"></select>
+    <span asp-validation-for="City" class="text-danger"></span>
+</div>
+<div class="form-group">
     <label class="control-label">Radno iskustvo</label>
     <input asp-for="WorkingExperience" class="form-control" />
     <span asp-validation-for="WorkingExperience" class="text-danger"></span>
 </div>
-<div class="form-group">
+<div class="form-group mt-2">
     <input type="submit" value="Spremi" class="btn btn-outline-success" />
 </div>
