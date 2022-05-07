@@ -38,3 +38,23 @@
 		}
 	</tbody>
 </table>
+
+@section scripts {
+	<script type="text/javascript">
+		$("tr").css("opacity", "0.5");
+		
+		$("tr").hover(function(e){
+			$(this).css("opacity", e.type === "mouseenter" ? "1.0" : "0.5");
+		});
+
+		$("tr").click(function(){
+			console.log($(this).css("font-weight"));
+			if($(this).css("font-weight") != "bold" && $(this).css("font-weight") != "700"){
+				$(this).css("font-weight", "bold");
+			}
+			else{
+				$(this).css("font-weight", "normal");
+			}
+		});
+	</script>
+}
