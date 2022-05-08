@@ -44,6 +44,16 @@
     <input asp-for="WorkingExperience" class="form-control" />
     <span asp-validation-for="WorkingExperience" class="text-danger"></span>
 </div>
+<div class="form-group">
+    <label class="control-label">Datum rođenja</label>
+    <div class="input-group date" data-provide="datepicker" 
+        data-date-format="@System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower()">
+        <input asp-for="DateOfBirth" type="text" class="form-control datepicker" id="date">
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+    </div>
+</div>
 <div class="form-group mt-2">
     <input type="submit" value="Spremi" class="btn btn-outline-success" />
 </div>

@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using Vjezba.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+var SupportedCultures = new[]{
+    new CultureInfo("hr"), new CultureInfo("en-US")
+};
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("hr"),
+    SupportedCultures = SupportedCultures,
+    SupportedUICultures = SupportedCultures
+});
 
 app.UseRouting();
 

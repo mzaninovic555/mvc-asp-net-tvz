@@ -26,6 +26,7 @@ namespace Vjezba.Model
         [ForeignKey(nameof(City))]
         public int? CityID { get; set; }
         public City? City { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";
 
