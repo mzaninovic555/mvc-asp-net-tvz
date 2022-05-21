@@ -69,6 +69,7 @@ namespace Vjezba.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CityID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateOfBirth")
@@ -76,13 +77,11 @@ namespace Vjezba.DAL.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -90,8 +89,7 @@ namespace Vjezba.DAL.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -149,7 +147,9 @@ namespace Vjezba.DAL.Migrations
                 {
                     b.HasOne("Vjezba.Model.City", "City")
                         .WithMany("Clients")
-                        .HasForeignKey("CityID");
+                        .HasForeignKey("CityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("City");
                 });

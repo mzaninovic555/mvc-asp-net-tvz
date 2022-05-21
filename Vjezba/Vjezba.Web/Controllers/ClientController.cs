@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Vjezba.DAL;
 using Vjezba.Model;
 using Vjezba.Web.Models;
@@ -20,7 +24,7 @@ namespace Vjezba.Web.Controllers
         {
             filter ??= new ClientFilterModel();
 
-            var clientQuery = this._dbContext.Clients.Include(c => c.City).AsQueryable();
+            var clientQuery = this._dbContext.Clients.Include(p => p.City).AsQueryable();
 
             //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
             //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
@@ -52,21 +56,13 @@ namespace Vjezba.Web.Controllers
 
         public IActionResult Create()
         {
-            InitiateSelectCities();
-
+            this.FillDropdownValues();
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(Client model)
         {
-            InitiateSelectCities();
-
-            var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
-                .SelectMany(E => E.Errors)
-                .Select(E => E.ErrorMessage)
-                .ToList();
-
             if (ModelState.IsValid)
             {
                 this._dbContext.Clients.Add(model);
@@ -74,59 +70,55 @@ namespace Vjezba.Web.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            
+            else
+            {
+                this.FillDropdownValues();
+                return View();
+            }
+        }
+
+        [ActionName(nameof(Edit))]
+        public IActionResult Edit(int id)
+        {
+            var model = this._dbContext.Clients.FirstOrDefault(c => c.ID == id);
+            this.FillDropdownValues();
             return View(model);
         }
 
-        [ActionName("Edit")]
-        public IActionResult EditGet(int id)
-        {
-            Client client = this._dbContext.Clients.First(c => c.ID == id);
-            InitiateSelectCities();
-
-            return View(client);
-        }
-
         [HttpPost]
-        [ActionName("Edit")]
+        [ActionName(nameof(Edit))]
         public async Task<IActionResult> EditPost(int id)
         {
-            Client client = this._dbContext.Clients.Include(c => c.City).First(c => c.ID == id);
-            bool isOk = await TryUpdateModelAsync(client);
+            var client = this._dbContext.Clients.Single(c => c.ID == id);
+            var ok = await this.TryUpdateModelAsync(client);
 
-            var validationErrors = ModelState.Values.Where(E => E.Errors.Count > 0)
-                .SelectMany(E => E.Errors)
-                .Select(E => E.ErrorMessage)
-                .ToList();
-
-            if (isOk)
+            if (ok && this.ModelState.IsValid)
             {
                 this._dbContext.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            InitiateSelectCities();
 
+            this.FillDropdownValues();
             return View();
         }
 
-        public void InitiateSelectCities()
+        private void FillDropdownValues()
         {
-            var cities = new List<SelectListItem>();
+            var selectItems = new List<SelectListItem>();
 
+            //Polje je opcionalno
             var listItem = new SelectListItem();
-            listItem.Text = " - odaberite -";
-            listItem.Value= " - odaberite -";
-            cities.Add(listItem);
+            listItem.Text = "- odaberite -";
+            listItem.Value = "";
+            selectItems.Add(listItem);
 
-            foreach(var city in this._dbContext.Cities)
+            foreach (var category in this._dbContext.Cities)
             {
-                listItem = new SelectListItem();
-                listItem.Text = city.Name;
-                listItem.Value = city.ID.ToString();
-                cities.Add(listItem);
+                listItem = new SelectListItem(category.Name, category.ID.ToString());
+                selectItems.Add(listItem);
             }
 
-            ViewBag.Cities = cities;
+            ViewBag.PossibleCities = selectItems;
         }
     }
 }

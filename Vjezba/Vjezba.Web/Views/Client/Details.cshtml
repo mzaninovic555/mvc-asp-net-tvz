@@ -1,5 +1,4 @@
-﻿@using Vjezba.Model
-@model Client
+﻿@model Client
 
 @{
 	ViewData["Title"] = "Details";
@@ -60,19 +59,12 @@
 			<dd>
 				@Model?.City?.Name
 			</dd>
-			<dt>
-				Radno iskustvo
-			</dt>
-			<dd>
-				@Model?.WorkingExperience
-			</dd>
-			<dt>
-				Datum rođenja
-			</dt>
-			<dd>
-				@Html.DisplayFor(model => model.DateOfBirth)
-			</dd>
 		</dl>
+
+		<div>
+			<a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-primary">Uredi</a>
+		</div>
+
 	</div>
 
 }

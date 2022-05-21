@@ -1,59 +1,66 @@
-@model Vjezba.Model.Client
+﻿@model Vjezba.Model.Client
 
 <div class="form-group">
-    <label class="control-label">Ime</label>
-    <input asp-for="FirstName" class="form-control" />
-    <span asp-validation-for="FirstName" class="text-danger"></span>
+	<label class="control-label">Ime</label>
+	<input asp-for="FirstName" class="form-control" />
+	<span asp-validation-for="FirstName" class="text-danger"></span>
 </div>
 <div class="form-group">
-    <label class="control-label">Prezime</label>
-    <input asp-for="LastName" class="form-control" />
-    <span asp-validation-for="LastName" class="text-danger"></span>
+	<label class="control-label">Prezime</label>
+	<input asp-for="LastName" class="form-control" />
+	<span asp-validation-for="LastName" class="text-danger"></span>
 </div>
 <div class="form-group">
-    <label asp-for="Email" class="control-label"></label>
-    <input asp-for="Email" class="form-control" id="email" />
-    <span style="display: none;">Format: mail@domena.lokacija</span>
-    <span asp-validation-for="Email" class="text-danger"></span>
+	<label asp-for="Email" class="control-label"></label>
+	<input asp-for="Email" class="form-control" />
+	<span asp-validation-for="Email" class="text-danger"></span>
 </div>
 <div class="form-group">
-    <label class="control-label">Spol</label>
-    <input asp-for="Gender" class="form-control" />
-    <span asp-validation-for="Gender" class="text-danger"></span>
+	<label class="control-label">Spol</label>
+	<input asp-for="Gender" class="form-control" />
+	<span asp-validation-for="Gender" class="text-danger"></span>
 </div>
-<div class="form-group mt-3">
-    <label class="control-label">Adresa</label>
-    <div id="mapbox" class="mb-3"></div>
-</div>
+
+@{
+	// Malo hacky, ali funkcionira dobro za sve zapadne kulture, primjer moćnijih kultura su US ili RH.
+	var pattern = System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower();
+	pattern = pattern.Replace("DD", "D").Replace("D", "DD");
+	pattern = pattern.Replace("MM", "M").Replace("M", "MM");
+}
+
 <div class="form-group">
-    <input asp-for="Address" class="form-control" id="address" hidden />
-    <span asp-validation-for="Address" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label class="control-label">Tel.</label>
-    <input asp-for="PhoneNumber" class="form-control" />
-    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label class="control-label">Grad</label>
-    <select asp-for="CityID" asp-items="ViewBag.Cities" class="form-control"></select>
-    <span asp-validation-for="City" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label class="control-label">Radno iskustvo</label>
-    <input asp-for="WorkingExperience" class="form-control" />
-    <span asp-validation-for="WorkingExperience" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label class="control-label">Datum rođenja</label>
-    <div class="input-group date" data-provide="datepicker" 
-        data-date-format="@System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower()">
-        <input asp-for="DateOfBirth" type="text" class="form-control datepicker" id="date">
-        <div class="input-group-addon">
-            <span class="glyphicon glyphicon-th"></span>
-        </div>
+	<label class="control-label">Datum rođenja</label>
+
+	<div class="input-group date inp-datepicker" data-format="@pattern">
+		<input type="text" class="form-control" asp-for="DateOfBirth" />
+		<span class="input-group-append">
+			<span class="input-group-text bg-light d-block">
+			<i class="fa fa-calendar"></i>
+			</span>
+		</span>
     </div>
+	<span asp-validation-for="DateOfBirth" class="text-danger"></span>
 </div>
-<div class="form-group mt-2">
-    <input type="submit" value="Spremi" class="btn btn-outline-success" />
+<div class="form-group">
+	<label class="control-label">Radno iskustvo</label>
+	<input asp-for="WorkingExperience" class="form-control" />
+	<span asp-validation-for="WorkingExperience" class="text-danger"></span>
+</div>
+<div class="form-group">
+	<label class="control-label">Obitavalište</label>
+	<input asp-for="Address" class="form-control" />
+	<span asp-validation-for="Address" class="text-danger"></span>
+</div>
+<div class="form-group">
+	<label class="control-label">Grad</label>
+	<select asp-for="CityID" asp-items="ViewBag.PossibleCities" class="form-control"></select>
+	<span asp-validation-for="CityID" class="text-danger"></span>
+</div>
+<div class="form-group">
+	<label class="control-label">Tel.</label>
+	<input asp-for="PhoneNumber" class="form-control" />
+	<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+</div>
+<div class="form-group">
+	<input type="submit" value="Spremi" class="btn btn-outline-success" />
 </div>

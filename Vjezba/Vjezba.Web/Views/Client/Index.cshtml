@@ -1,4 +1,4 @@
-﻿@model List<Vjezba.Model.Client>
+﻿@model List<Client>
 
 @{
 	ViewData["Title"] = "Home Page";
@@ -30,31 +30,9 @@
 				<td>@item.Email</td>
 				<td>@item.City?.Name</td>
 				<td>
-					<a asp-action="Edit" asp-route-id="@item.ID">
-						<button class="btn btn-warning">Uredi</button>
-					</a>
-				</td>
+				<a asp-action="Edit" asp-route-id="@item.ID">[edit]</a>
+			</td>
 			</tr>
 		}
 	</tbody>
 </table>
-
-@section scripts {
-	<script type="text/javascript">
-		$("tbody > tr").css("opacity", "0.5");
-		
-		$("tbody > tr").hover(function(e){
-			$(this).css("opacity", e.type === "mouseenter" ? "1.0" : "0.5");
-		});
-
-		$("tbody > tr").click(function(){
-			console.log($(this).css("font-weight"));
-			if($(this).css("font-weight") != "bold" && $(this).css("font-weight") != "700"){
-				$(this).css("font-weight", "bold");
-			}
-			else{
-				$(this).css("font-weight", "normal");
-			}
-		});
-	</script>
-}
