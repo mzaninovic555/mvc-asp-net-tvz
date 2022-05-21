@@ -20,28 +20,9 @@ namespace Vjezba.Web.Controllers
             this._dbContext = dbContext;
         }
 
-        public ActionResult Index(ClientFilterModel filter)
+        public ActionResult Index()
         {
-            filter ??= new ClientFilterModel();
-
-            var clientQuery = this._dbContext.Clients.Include(p => p.City).AsQueryable();
-
-            //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
-            //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
-            if (!string.IsNullOrWhiteSpace(filter.FullName))
-                clientQuery = clientQuery.Where(p => (p.FirstName + " " + p.LastName).ToLower().Contains(filter.FullName.ToLower()));
-
-            if (!string.IsNullOrWhiteSpace(filter.Address))
-                clientQuery = clientQuery.Where(p => p.Address.ToLower().Contains(filter.Address.ToLower()));
-
-            if (!string.IsNullOrWhiteSpace(filter.Email))
-                clientQuery = clientQuery.Where(p => p.Email.ToLower().Contains(filter.Email.ToLower()));
-
-            if (!string.IsNullOrWhiteSpace(filter.City))
-                clientQuery = clientQuery.Where(p => p.CityID != null && p.City.Name.ToLower().Contains(filter.City.ToLower()));
-
-            var model = clientQuery.ToList();
-            return View("Index", model);
+            return View("Index");
         }
 
         public IActionResult Details(int? id = null)
@@ -100,6 +81,30 @@ namespace Vjezba.Web.Controllers
 
             this.FillDropdownValues();
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult IndexAjax (ClientFilterModel filter)
+        {
+            var clientQuery = this._dbContext.Clients.Include(p => p.City).AsQueryable();
+
+            //Primjer iterativnog građenja upita - dodaje se "where clause" samo u slučaju da je parametar doista proslijeđen.
+            //To rezultira optimalnijim stablom izraza koje se kvalitetnije potencijalno prevodi u SQL
+            if (!string.IsNullOrWhiteSpace(filter.FullName))
+                clientQuery = clientQuery.Where(p => (p.FirstName + " " + p.LastName).ToLower().Contains(filter.FullName.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+                clientQuery = clientQuery.Where(p => p.Address.ToLower().Contains(filter.Address.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(filter.Email))
+                clientQuery = clientQuery.Where(p => p.Email.ToLower().Contains(filter.Email.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(filter.City))
+                clientQuery = clientQuery.Where(p => p.CityID != null && p.City.Name.ToLower().Contains(filter.City.ToLower()));
+
+            var model = clientQuery.ToList();
+
+            return PartialView("_IndexTable", model);
         }
 
         private void FillDropdownValues()
