@@ -14,10 +14,12 @@ namespace Vjezba.Web.Controllers
     public class ClientController : Controller
     {
         private ClientManagerDbContext _dbContext;
+        private IWebHostEnvironment _hostingEnvironment;
 
-        public ClientController(ClientManagerDbContext dbContext)
+        public ClientController(ClientManagerDbContext dbContext, IWebHostEnvironment hostingEnvironment)
         {
             this._dbContext = dbContext;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public ActionResult Index()
@@ -105,6 +107,51 @@ namespace Vjezba.Web.Controllers
             var model = clientQuery.ToList();
 
             return PartialView("_IndexTable", model);
+        }
+
+        public IActionResult UploadAttachment(int clientId, IFormFile file)
+        {
+            string path = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+
+            string filePath = Path.Combine(path, file.FileName);
+            using (Stream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
+                file.CopyTo(fileStream);
+            }
+
+            this._dbContext.Attachements.Add(new Attachement()
+            {
+                ClientID = clientId,
+                FilePath = filePath
+            });
+            this._dbContext.SaveChanges();
+
+            return Json(new { success = true });
+        }
+
+        public IActionResult DeleteAttachment(int attachmentId)
+        {
+            Attachement attachement = this._dbContext.Attachements.Where(a => a.ID == attachmentId).FirstOrDefault();
+
+            if(attachement == null)
+            {
+                return Json(new { success = false });
+            }
+
+            this._dbContext.Attachements.Remove(attachement);
+            this._dbContext.SaveChanges();
+
+            return Json(new { success = true }); 
+        }
+
+        [HttpGet]
+        public IActionResult GetAttachments(int clientId)
+        {
+            List<Attachement> attachements = _dbContext.Attachements
+                .Where(a => a.ClientID == clientId)
+                .ToList();
+
+            return PartialView("_AttachmentList", attachements);
         }
 
         private void FillDropdownValues()

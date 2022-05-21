@@ -18,4 +18,33 @@
 			<partial name="_CreateOrEdit" />
 		</form>
 	</div>
+	<div class="col-md-6">
+		<label class="control-label">Photo</label>
+		<form id="photos" asp-controller="Client" asp-action="UploadAttachment" asp-route-clientId="@Model.ID"
+			enctype="multipart/form-data" class="dropzone">
+
+		</form>
+	</div>
+	<div>
+		<h2>Lista attachment-a</h2>
+		<partial name="_AttachmentList" model="new List<Attachement>()" />
+	</div>
 </div>
+
+@section scripts {
+	<script>
+		Dropzone.options.photos = {
+			success: function(file, response) {
+				console.log({ file, response });
+			}
+		};
+	</script>
+	<script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "@Url.Action("GetAttachments", new { clientId = @Model.ID })",
+                method: "GET"
+            });
+        });
+    </script>
+}

@@ -37,6 +37,7 @@ namespace Vjezba.Model
         public string FullName => $"{FirstName} {LastName}";
 
         public virtual ICollection<Meeting>? Meetings { get; set; }
+        public virtual ICollection<Attachement>? Attachements { get; set; }
 
     }
 }
