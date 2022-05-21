@@ -1,11 +1,12 @@
 ﻿@model List<Vjezba.Model.Attachement>
 
 <div>
-    <ul class="list-group">
-        @foreach (var attachment in @Model)
+    <ul class="list-group mt-2">
+        @foreach (var attachment in Model)
         {
-            <li class="list-group-item list-group-item-light">@attachment.FilePath</li>
-            <a asp-action="DeleteAttachment" asp-route-attachmentId="@attachment.ID">[Edit]</a>
+            <li class="list-group-item list-group-item-light">@attachment.FilePath 
+                <button type="button" onClick="deleteAttachment(@attachment.ID)" class="btn btn-danger">Izbriši</button> 
+            </li>
         }
     </ul>
 </div>

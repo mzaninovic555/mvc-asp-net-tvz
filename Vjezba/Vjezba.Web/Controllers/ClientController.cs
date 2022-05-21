@@ -129,6 +129,7 @@ namespace Vjezba.Web.Controllers
             return Json(new { success = true });
         }
 
+        [HttpDelete]
         public IActionResult DeleteAttachment(int attachmentId)
         {
             Attachement attachement = this._dbContext.Attachements.Where(a => a.ID == attachmentId).FirstOrDefault();
@@ -141,7 +142,7 @@ namespace Vjezba.Web.Controllers
             this._dbContext.Attachements.Remove(attachement);
             this._dbContext.SaveChanges();
 
-            return Json(new { success = true }); 
+            return GetAttachments(attachement.ClientID);
         }
 
         [HttpGet]
