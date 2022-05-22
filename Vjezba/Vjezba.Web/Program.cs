@@ -4,6 +4,7 @@ using System.Globalization;
 using Vjezba.DAL;
 using Vjezba.Model;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -19,6 +20,8 @@ builder.Services.AddDbContext<ClientManagerDbContext>(options =>
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ClientManagerDbContext>();
+
+builder.Services.AddScoped<UserManager<AppUser>>();
 
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {

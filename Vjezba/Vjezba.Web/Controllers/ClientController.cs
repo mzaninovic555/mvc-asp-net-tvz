@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Vjezba.DAL;
@@ -7,22 +9,26 @@ using Vjezba.Web.Models;
 
 namespace Vjezba.Web.Controllers
 {
-    public class ClientController : Controller
+    public class ClientController : BaseController
     {
         private ClientManagerDbContext _dbContext;
         private IWebHostEnvironment _hostingEnvironment;
-
-        public ClientController(ClientManagerDbContext dbContext, IWebHostEnvironment hostingEnvironment)
+        private UserManager<AppUser> _userManager;
+        public ClientController(ClientManagerDbContext dbContext, IWebHostEnvironment hostingEnvironment, UserManager<AppUser> _userManager)
         {
             this._dbContext = dbContext;
             _hostingEnvironment = hostingEnvironment;
+            this._userManager = _userManager;
+            //this.UserId = this._userManager.GetUserId(base.User);
         }
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View("Index");
         }
 
+        [AllowAnonymous]
         public IActionResult Details(int? id = null)
         {
             var client = this._dbContext.Clients
@@ -33,17 +39,20 @@ namespace Vjezba.Web.Controllers
             return View(client);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             this.FillDropdownValues();
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create(Client model)
         {
             if (ModelState.IsValid)
             {
+                model.CreatedById = this.UserId;
                 this._dbContext.Clients.Add(model);
                 this._dbContext.SaveChanges();
 
@@ -56,6 +65,7 @@ namespace Vjezba.Web.Controllers
             }
         }
 
+        [Authorize]
         [ActionName(nameof(Edit))]
         public IActionResult Edit(int id)
         {
@@ -64,11 +74,13 @@ namespace Vjezba.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         [ActionName(nameof(Edit))]
         public async Task<IActionResult> EditPost(int id)
         {
             var client = this._dbContext.Clients.Single(c => c.ID == id);
+            client.UpdatedById = this.UserId;
             var ok = await this.TryUpdateModelAsync(client);
 
             if (ok && this.ModelState.IsValid)
@@ -81,6 +93,7 @@ namespace Vjezba.Web.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult IndexAjax (ClientFilterModel filter)
         {
@@ -105,6 +118,7 @@ namespace Vjezba.Web.Controllers
             return PartialView("_IndexTable", model);
         }
 
+        [Authorize]
         public IActionResult UploadAttachment(int clientId, IFormFile file)
         {
             string path = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
@@ -125,6 +139,7 @@ namespace Vjezba.Web.Controllers
             return Json(new { success = true });
         }
 
+        [Authorize]
         [HttpDelete]
         public IActionResult DeleteAttachment(int attachmentId)
         {
@@ -141,6 +156,7 @@ namespace Vjezba.Web.Controllers
             return GetAttachments(attachement.ClientID);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAttachments(int clientId)
         {

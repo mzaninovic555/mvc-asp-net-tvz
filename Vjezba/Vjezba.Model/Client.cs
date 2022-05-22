@@ -34,6 +34,7 @@ namespace Vjezba.Model
 
         public virtual ICollection<Meeting>? Meetings { get; set; }
         public virtual ICollection<Attachement>? Attachements { get; set; }
-
+        public string? CreatedById { get; set; }
+        public string? UpdatedById { get; set; }
     }
 }
