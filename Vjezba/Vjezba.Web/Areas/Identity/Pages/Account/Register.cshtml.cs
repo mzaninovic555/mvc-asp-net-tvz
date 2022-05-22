@@ -98,6 +98,14 @@ namespace Vjezba.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [RegularExpression("[0-9]{13}")]
+            public string JMBG;
+
+            [Required]
+            [RegularExpression("[0-9]{11}")]
+            public string OIB;
         }
 
 
@@ -117,6 +125,8 @@ namespace Vjezba.Web.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.JMBG = Input.JMBG;
+                user.OIB = Input.OIB;
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)

@@ -85,6 +85,14 @@ namespace Vjezba.Web.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            [RegularExpression("[0-9]{13}")]
+            public string JMBG;
+
+            [Required]
+            [RegularExpression("[0-9]{11}")]
+            public string OIB;
         }
         
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -156,6 +164,8 @@ namespace Vjezba.Web.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.JMBG = Input.JMBG;
+                user.OIB = Input.OIB;
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
