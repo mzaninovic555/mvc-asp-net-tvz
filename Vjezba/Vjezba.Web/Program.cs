@@ -18,8 +18,15 @@ builder.Services.AddDbContext<ClientManagerDbContext>(options =>
         builder.Configuration.GetConnectionString("ClientManagerDbContext"),
             opt => opt.MigrationsAssembly("Vjezba.DAL")));
 
-builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+/*builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ClientManagerDbContext>();*/
+
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddRoleManager<RoleManager<IdentityRole>>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ClientManagerDbContext>();
+
 
 builder.Services.AddScoped<UserManager<AppUser>>();
 

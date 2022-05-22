@@ -28,7 +28,7 @@ namespace Vjezba.Web.Controllers
             return View("Index");
         }
 
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult Details(int? id = null)
         {
             var client = this._dbContext.Clients
@@ -39,14 +39,14 @@ namespace Vjezba.Web.Controllers
             return View(client);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
             this.FillDropdownValues();
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Manager")]
         [HttpPost]
         public IActionResult Create(Client model)
         {
@@ -65,7 +65,7 @@ namespace Vjezba.Web.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Manager")]
         [ActionName(nameof(Edit))]
         public IActionResult Edit(int id)
         {
@@ -74,7 +74,7 @@ namespace Vjezba.Web.Controllers
             return View(model);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Manager")]
         [HttpPost]
         [ActionName(nameof(Edit))]
         public async Task<IActionResult> EditPost(int id)
@@ -118,7 +118,7 @@ namespace Vjezba.Web.Controllers
             return PartialView("_IndexTable", model);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Manager")]
         public IActionResult UploadAttachment(int clientId, IFormFile file)
         {
             string path = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
@@ -139,7 +139,7 @@ namespace Vjezba.Web.Controllers
             return Json(new { success = true });
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Manager")]
         [HttpDelete]
         public IActionResult DeleteAttachment(int attachmentId)
         {
@@ -156,7 +156,7 @@ namespace Vjezba.Web.Controllers
             return GetAttachments(attachement.ClientID);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
         public IActionResult GetAttachments(int clientId)
         {
