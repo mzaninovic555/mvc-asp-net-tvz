@@ -33,6 +33,7 @@
 
 @section scripts {
 <script>
+	// Ako je upload datoteke 'success' -> Učitaj listu datoteka za klijenta.
 	Dropzone.options.photos = {
 		success: function (file, response) {
 			console.log({ file, response });
@@ -42,6 +43,8 @@
 </script>
 
 <script>
+	// Na učitavanje html dokumenta -> Učitaj listu datoteka za klijenta.
+	// Ako je učitavanje uspješno -> promijeni listAttachments div u listu sa podatcima iz kontrolera.
 	$(document).ready(loadAttachments());
 
 	function loadAttachments() {
@@ -56,6 +59,8 @@
 	}
 </script>
 <script>
+	// Kada se klikne gumb brisanja, pozovi ovu funkciju
+	// Ako je brisanje 'success' -> učitaj datoteke za klijenta.
     function deleteAttachment (attachmentId) {
         var link = "@Url.Action("DeleteAttachment", new { attachmentId = -100 })";
         link = link.replace("-100", attachmentId);
