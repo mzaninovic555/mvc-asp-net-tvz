@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Vjezba.Model;
 
 namespace Vjezba.DAL
 {
-    public class ClientManagerDbContext : DbContext
+    public class ClientManagerDbContext : IdentityDbContext<AppUser>
     {
         public ClientManagerDbContext(DbContextOptions<ClientManagerDbContext> options)
             : base(options)

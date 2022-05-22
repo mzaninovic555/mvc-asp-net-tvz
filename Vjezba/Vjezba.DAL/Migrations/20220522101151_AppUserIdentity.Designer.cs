@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vjezba.DAL;
 
@@ -11,9 +12,10 @@ using Vjezba.DAL;
 namespace Vjezba.DAL.Migrations
 {
     [DbContext(typeof(ClientManagerDbContext))]
-    partial class ClientManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220522101151_AppUserIdentity")]
+    partial class AppUserIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
