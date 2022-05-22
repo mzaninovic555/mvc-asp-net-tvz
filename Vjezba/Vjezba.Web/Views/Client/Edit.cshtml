@@ -36,6 +36,7 @@
 	Dropzone.options.photos = {
 		success: function (file, response) {
 			console.log({ file, response });
+			loadAttachments();
 		}
 	};
 </script>
@@ -47,16 +48,9 @@
 		$.ajax({
 			url: "@Url.Action("GetAttachments", new { clientId = @Model.ID })",
 			method: "GET",
-			success: () => console.log("success")
-		});
-	};
-
-	function loadAttachments() {
-		$.ajax({
-			url: "@Url.Action("GetAttachments", new { clientId = @Model.ID })",
-			method: "GET",
 			success: function (html) {
 				$("#listAttachments").html(html);
+				console.log("Loading attachments...");
 			}
 		});
 	}
@@ -71,6 +65,7 @@
             method: "DELETE",
             success: function (html) {
                 $("#listAttachments").html(html);
+				loadAttachments();
             }
         });
     }
