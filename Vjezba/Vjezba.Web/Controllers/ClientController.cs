@@ -119,7 +119,7 @@ namespace Vjezba.Web.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete]
+        //[HttpDelete]
         public IActionResult Delete(int clientId) 
         {
             Client clientToDelete = this._dbContext.Clients.Where(c => c.ID == clientId).FirstOrDefault();
@@ -130,7 +130,9 @@ namespace Vjezba.Web.Controllers
             }
 
             this._dbContext.Clients.Remove(clientToDelete);
-            return IndexAjax(new ClientFilterModel());
+            this._dbContext.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Admin,Manager")]

@@ -101,11 +101,11 @@ namespace Vjezba.Web.Areas.Identity.Pages.Account
 
             [Required]
             [RegularExpression("[0-9]{13}", ErrorMessage = "JMBG is not the right format.")]
-            public string JMBG;
+            public string JMBG { get; set; }
 
             [Required]
             [RegularExpression("[0-9]{11}", ErrorMessage = "OIB is not the right format.")]
-            public string OIB;
+            public string OIB { get; set; }
         }
 
 
