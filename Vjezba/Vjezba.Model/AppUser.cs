@@ -12,10 +12,10 @@ namespace Vjezba.Model
     {
         [Required]
         [RegularExpression("[0-9]{13}")]
-        public string JMBG;
+        public string JMBG { get; set; }
 
         [Required]
         [RegularExpression("[0-9]{11}")]
-        public string OIB;
+        public string OIB { get; set; }
     }
 }
