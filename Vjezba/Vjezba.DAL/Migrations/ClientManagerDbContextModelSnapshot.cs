@@ -156,7 +156,7 @@ namespace Vjezba.DAL.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    //b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Vjezba.Model.AppUser", b =>

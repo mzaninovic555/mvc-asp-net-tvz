@@ -118,6 +118,21 @@ namespace Vjezba.Web.Controllers
             return PartialView("_IndexTable", model);
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public IActionResult Delete(int clientId) 
+        {
+            Client clientToDelete = this._dbContext.Clients.Where(c => c.ID == clientId).FirstOrDefault();
+
+            if(clientToDelete == null) 
+            {
+                return View(); 
+            }
+
+            this._dbContext.Clients.Remove(clientToDelete);
+            return IndexAjax(new ClientFilterModel());
+        }
+
         [Authorize(Roles = "Admin,Manager")]
         public IActionResult UploadAttachment(int clientId, IFormFile file)
         {
@@ -139,7 +154,7 @@ namespace Vjezba.Web.Controllers
             return Json(new { success = true });
         }
 
-        [Authorize(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public IActionResult DeleteAttachment(int attachmentId)
         {

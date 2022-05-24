@@ -100,11 +100,11 @@ namespace Vjezba.Web.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
-            [RegularExpression("[0-9]{13}")]
+            [RegularExpression("[0-9]{13}", ErrorMessage = "JMBG is not the right format.")]
             public string JMBG;
 
             [Required]
-            [RegularExpression("[0-9]{11}")]
+            [RegularExpression("[0-9]{11}", ErrorMessage = "OIB is not the right format.")]
             public string OIB;
         }
 
